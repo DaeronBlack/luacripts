@@ -7,10 +7,11 @@
 --
 
 local list = {
-    ["001"] = "76561198118445858",
-    ["002"] = "76561198043837993"
+    --["STEAM_0:0:79090065"] = true,
+    ["STEAM_0:1:41786132"] = true,
 }
 
+--[[
 local function spawn( ply )
     if table.HasValue(list, ply:SteamID()) then
         return true
@@ -18,12 +19,18 @@ local function spawn( ply )
 end
 
 hook.Add( "PlayerInitialSpawn", "Spawn_Notification", spawn )
-
+]]--
 hook.Add("PrePACConfigApply", "PACRankRestrict", function(ply)
-    if not spawn == true then
-        return false,"Insufficient rank to use PAC."
+    if not list[ply:SteamID()] then
+        return false, "Insufficient rank to use PAC."
     end
-end)
+end )
+
+hook.Add( "PrePACEditorOpen", "PACEditorRestrictor", function(ply)
+    if not list[ply:SteamID()] then
+        return false
+    end
+end )
 
 --[[
 hook.add("SQLCreateTable", "Creating Table", function()
