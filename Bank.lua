@@ -9,7 +9,7 @@
 function ENT:Draw()
     self:DrawModel()
 
-    local pos = self:GetPos()-- + Vector(0, 0, 1) * math.sin(CurTime() * 2) * 2
+    local pos = self:GetPos() + Vector(0, 0, 1) * math.sin(CurTime() * 2) * 2
     local PlayersAngle = LocalPlayer():GetAngles()
     local ang = Angle( 0, PlayersAngle.y - 180, 0 )
 
