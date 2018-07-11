@@ -12,7 +12,7 @@ local table = {
 }
 
 function GM:PlayerInitialSpawn(ply)
-    if table[ply:SteamID] then
+    if table[[ply:SteamID]] then
         return true
     end
 end
