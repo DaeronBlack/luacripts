@@ -9,7 +9,6 @@
 function GODMODE( ply, dmginfo) if(ply:GetNWInt("GOD") == 1) then
     dmginfo:ScaleDamage(0)
 end
-
     hook.Add("EntityTakeDamage", "GODMODE", GODMODE)
 end
 
