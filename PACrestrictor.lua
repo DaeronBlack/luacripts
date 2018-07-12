@@ -34,9 +34,9 @@ end
 
 function check( ply )
 
-    steamID = ply:SteamID()
+    PlayerSID = ply:SteamID()
 
-    result = sql.Query("SELECT SteamIDsql FROM PAC_steamid WHERE SteamIDsql = '"..steamID.."'")
+    result = sql.Query("SELECT SteamIDsql FROM PAC_steamid WHERE SteamIDsql = '"..PlayerSID.."'")
     if (result) then
         return true
     end
