@@ -15,8 +15,18 @@ local DATABASE_PASSWORD  = ""
 
 local db = mysqloo.connect(DATABASE_HOST, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_PORT)
 
+function connected()
+    if db:onConnected() then
+        print "Connected!"
+    end
+    if db:onConnectionFailed() then
+        print "Failed!"
+    end
+end
+
 function Initialize()
     db:connect()
+    connected()
     checktable()
 end
 
@@ -25,9 +35,9 @@ function checktable()if db:DATABASE_CONNECTED and db:TableExists("PAC_whitelist"
     print "Table exists"
     else
         if ( not db:TableExists("PAC_whitelist")) then
-            SQLquery = db:query( "CREATE TABLE PAC_steamid ( ID INTEGER, SteamIDsql TEXT )" )
+            SQLquery = db:query( "CREATE TABLE PAC_whitelist ( ID INTEGER, SteamIDsql TEXT )" )
             result = db:query(SQLquery)
-            if (db:TableExists("PAC_steamid")) then
+            if (db:TableExists("PAC_whitelist")) then
                 print "Table created"
             else
                 print "Error \n"
