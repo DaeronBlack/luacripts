@@ -5,19 +5,29 @@
 -- Time: 20:40
 -- To change this template use File | Settings | File Templates.
 --
+require("mysqloo")
+
+local DATABASE_HOST = ""
+local DATABASE_PORT = 3306
+local DATABASE_NAME = ""
+local DATABASE_USERNAME = ""
+local DATABASE_PASSWORD  = ""
+
+local db = mysqloo.connect(DATABASE_HOST, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_PORT)
 
 function Initialize()
-    tables_exist()
+    db:connect()
+    checktable()
 end
 
-function table_exist()if sql.TableExists("PAC_steamid") then
+function checktable()if db:DATABASE_CONNECTED and db:TableExists("PAC_whitelist") then
 
-    print "Tables exist"
+    print "Table exists"
     else
-        if ( not sql.TableExists("PAC_steamid")) then
-            query = "CREATE TABLE PAC_steamid ( ID INTEGER, SteamIDsql TEXT )"
-            result = sql.Query(query)
-            if (sql.TableExists("PAC_steamid")) then
+        if ( not db:TableExists("PAC_whitelist")) then
+            SQLquery = db:query( "CREATE TABLE PAC_steamid ( ID INTEGER, SteamIDsql TEXT )" )
+            result = db:query(SQLquery)
+            if (db:TableExists("PAC_steamid")) then
                 print "Table created"
             else
                 print "Error \n"
@@ -31,7 +41,7 @@ function check( ply )
 
     PlayerSID = ply:SteamID()
 
-    result = sql.Query("SELECT SteamIDsql FROM PAC_steamid WHERE SteamIDsql = '"..PlayerSID.."'")
+    result = db:query("SELECT SteamIDsql FROM PAC_whitelist WHERE SteamIDsql = '"..PlayerSID.."'")
     if (result) then
         return true
     end
