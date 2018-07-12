@@ -11,33 +11,47 @@ local list = {
     ["STEAM_0:1:41786132"] = true,
 }
 
-hook.Add("PrePACConfigApply", "PACRankRestrict", function(ply)
-    if not list[ply:SteamID()] then
-        return false, "Insufficient rank to use PAC."
+function Initialize()
+    tables_exist()
+end
+
+function table_exist()if sql.TableExists("PAC_steamid") then
+
+    print "Tables exist"
+    else
+        if ( not sql.TableExists("PAC_steamid")) then
+            query = "CREATE TABLE PAC_steamid ( ID INTEGER, SteamIDsql TEXT )"
+            result = sql.Query(query)
+            if (sql.TableExists("PAC_steamid")) then
+                print "Table created"
+            else
+                print "Error \n"
+                print "sql.LastError( result )" "\n"
+            end
+        end
     end
-end )
+end
 
-hook.Add( "PrePACEditorOpen", "PACEditorRestrictor", function(ply)
-    if not list[ply:SteamID()] then
-        return false, "Insufficient rank to use PAC!"
-    end
-end )
+function check( ply )
 
---[[
-hook.add("SQLCreateTable", "Creating Table", function()
-    sql.Query("CREATE TABLE PAC_steamid( ID INTEGER, SteamID TEXT)")
-end)
+    steamID = ply:SteamID()
 
-function CheckTable()
-    if[sql.Query("SELECT EXISTS(SELECT 1 FROM PAC_steamid WHERE SteamID = data)")]=TRUE then
+    result = sql.Query("SELECT SteamIDsql FROM PAC_steamid WHERE SteamIDsql = '"..steamID.."'")
+    if (result) then
         return true
     end
 end
 
 hook.Add("PrePACConfigApply", "PACRankRestrict", function(ply)
-    if not list[ply:SteamID()] = ply:Name() then
-        return false,"Insufficient rank to use PAC."
+    if not check == true --check[ply:SteamID()] then
+    then
+        return false, "Insufficient rank to use PAC."
     end
-end)
+end )
 
-]]--
+hook.Add( "PrePACEditorOpen", "PACEditorRestrictor", function(ply)
+    if not check == true --check[ply:SteamID()] then
+        then
+        return false, "Insufficient rank to use PAC!"
+    end
+end )

@@ -28,7 +28,7 @@ function ENT:Draw()
 
     local pos = self:GetPos() + Vector(0, 0, 1) * math.sin(CurTime() * 2) * 2
     local PlayersAngle = LocalPlayer():GetAngles()
-    local ang = 0 + Angle( 0, PlayersAngle.y, 0 )
+    local ang = 0 + Angle( 0, PlayersAngle.y - 180, 0 )
 
     --ang:RotateAroundAxis(ang:Right(), -90)
     --ang:RotateAroundAxis(ang:Up(), 90)
