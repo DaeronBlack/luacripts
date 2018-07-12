@@ -1,10 +1,3 @@
---
--- Created by IntelliJ IDEA.
--- User: Jorn
--- Date: 11-7-2018
--- Time: 20:40
--- To change this template use File | Settings | File Templates.
---
 require("mysqloo")
 
 local DATABASE_HOST = ""
@@ -13,24 +6,24 @@ local DATABASE_NAME = ""
 local DATABASE_USERNAME = ""
 local DATABASE_PASSWORD  = ""
 
-local db = mysqloo.connect(DATABASE_HOST, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_PORT)
+db = mysqloo.connect(DATABASE_HOST, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_PORT)
 
-function connected()
-    if db:onConnected() then
-        print "Connected!"
-    end
-    if db:onConnectionFailed() then
-        print "Failed!"
-    end
+function db:onConnected()
+    print "Connected to database!"
 end
 
+function db:onConnectionFailed( err )
+    print( "Connection faied!")
+    print( err )
+end
+
+db:connect()
+
 function Initialize()
-    db:connect()
-    connected()
     checktable()
 end
 
-function checktable()if db:DATABASE_CONNECTED and db:TableExists("PAC_whitelist") then
+function checktable()if db:TableExists("PAC_whitelist") then
 
     print "Table exists"
     else
