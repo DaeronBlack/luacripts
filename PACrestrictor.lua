@@ -6,11 +6,6 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-local list = {
-    ["STEAM_0:0:79090065"] = true,
-    ["STEAM_0:1:41786132"] = true,
-}
-
 function Initialize()
     tables_exist()
 end
