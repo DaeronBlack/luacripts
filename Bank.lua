@@ -1,17 +1,34 @@
---
--- Created by IntelliJ IDEA.
--- User: Jorn
--- Date: 11-7-2018
--- Time: 20:37
--- To change this template use File | Settings | File Templates.
---
+include("shared.lua")
+
+function BANK_RestartCooldown( um )
+    LocalPlayer().RobberyCooldown = CurTime() + um:ReadLong()
+end
+usermessage.Hook("BANK_RestartCooldown", BANK_RestartCooldown)
+
+function BANK_KillCooldown()
+    LocalPlayer().RobberyCooldown = 0
+end
+usermessage.Hook("BANK_KillCooldown", BANK_KillCooldown)
+
+function BANK_RestartCountdown( um )
+    LocalPlayer().RobberyCountdown = CurTime() + um:ReadLong()
+end
+usermessage.Hook("BANK_RestartTimer", BANK_RestartCountdown)
+
+function BANK_KillCountdown()
+    LocalPlayer().RobberyCountdown = 0
+end
+usermessage.Hook("BANK_KillTimer", BANK_KillCountdown)
+
+function ENT:Initialize()
+end
 
 function ENT:Draw()
     self:DrawModel()
 
-    local pos = self:GetPos() + Vector(0, 0, 1) --* math.sin(CurTime() * 2) * 2
-    --local PlayersAngle = LocalPlayer():GetAngles()
-    local ang = 0--Angle( 0, PlayersAngle.y - 180, 0 )
+    local pos = self:GetPos() + Vector(0, 0, 1) * math.sin(CurTime() * 2) * 2
+    local PlayersAngle = LocalPlayer():GetAngles()
+    local ang = 0 + Angle( 0, PlayersAngle.y, 0 )
 
     --ang:RotateAroundAxis(ang:Right(), -90)
     --ang:RotateAroundAxis(ang:Up(), 90)
@@ -34,3 +51,11 @@ function ENT:Draw()
     draw.SimpleTextOutlined("".. DarkRP.formatMoney(BankAmount), "UiBoldBank", 0, -140, BANK_Design_BankVaultAmount, 1, 1, 1.5, BANK_Design_BankVaultAmountBoarder)
     cam.End3D2D()
 end
+
+--
+-- Created by IntelliJ IDEA.
+-- User: Jorn
+-- Date: 11-7-2018
+-- Time: 20:37
+-- To change this template use File | Settings | File Templates.
+--
