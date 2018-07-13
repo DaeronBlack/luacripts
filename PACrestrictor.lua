@@ -46,9 +46,9 @@ end
 
 db:connect()
 
-function initialize()
+hook.Add("Initialize", "DatabaseStuff", function( )
     checktable()
-end
+end )
 
 function checktable()if db:TableExists("PAC_whitelist") then
 
