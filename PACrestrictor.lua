@@ -24,7 +24,7 @@ end )
 
 local q = db:query("CREATE TABLE IF NOT EXISTS PAC_whitelist ( ID INTEGER, STEAMIDsql TEXT) ")
 
-function q:onSucess(data)
+function q:onSucess()
     print "Success!"
 end
 
