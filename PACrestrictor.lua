@@ -64,6 +64,7 @@ function check( ply )
         print "Query failed!"
     end
 end
+hook.Add("CheckSteam", "Some Name", check)
 
 hook.Add("PrePACConfigApply", "PACRankRestrict", function(ply)
     if not check --check[ply:SteamID()] then
