@@ -6,7 +6,7 @@ local DATABASE_PASSWORD = ""
 local DATABASE_NAME = ""
 local DATABASE_PORT = "3306"
 
-db = mysql00.connect( DATABASE_HOST, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_PORT )
+db = mysqloo.connect( DATABASE_HOST, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_PORT )
 
 function db:onConnected()
     print "Connected to database!"
