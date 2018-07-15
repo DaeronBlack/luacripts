@@ -42,28 +42,16 @@ function checktable()
         end
 end
 ]]--
-function check( ply )
 
     local q = db:query("CREATE TABLE IF NOT EXISTS PAC_whitelist ( ID INTEGER, STEAMIDsql TEXT NOT NULL) ")
-    local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(ply:SteamID()).."'")
-    local query2 = db:getData("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(ply:SteamID()).."'")
     q:start()
-    print "Query started"
-    print("SteamID: " .. ply:SteamID())
-    if query2.onSuccess() then
-        print("Query2 successfull!:" ..query2)
-    end
-    if query1.onSuccess() then
-        return true, "Query success!"
-    end
-    if query1.onError(err) then
-        print "Query failed!"
-    end
-end
-hook.Add("CheckSteam", "Some Name", check)
+ 
+
 
 hook.Add("PrePACConfigApply", "PACRankRestrict", function(ply)
-    if not check() --check[ply:SteamID()] then
+    local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(ply:SteamID()).."'")
+    q:start()
+    if not query1() --check[ply:SteamID()] then
     then
         return false, "Insufficient rank to use PAC."
     end
