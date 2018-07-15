@@ -1,4 +1,8 @@
 require("mysqloo")
+-- TODO
+-- Make it so superadmins can add users with command in-game
+-- Superadmins can remove aswell ^
+--
 
 local DATABASE_HOST = ""
 local DATABASE_USERNAME = ""
@@ -19,10 +23,9 @@ end
 
 hook.Add("Initialize", "DatabaseStuff", function( )
     db:connect()
-    checktable()
 end )
 
-local q = db:query("CREATE TABLE IF NOT EXISTS PAC_whitelist ( ID INTEGER, STEAMIDsql TEXT) ")
+local q = db:query("CREATE TABLE IF NOT EXISTS PAC_whitelist ( ID INTEGER, STEAMIDsql TEXT NOT NULL) ")
 
 function q:onSucess()
     print "Success!"
@@ -54,8 +57,8 @@ function check( ply )
 
     PlayerSID = ply:SteamID()
 
-    result = db:query("SELECT SteamIDsql FROM PAC_whitelist WHERE SteamIDsql = '"..PlayerSID.."'")
-    if (result) then
+    local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(PlayerSID).."'")
+    query1.onSuccess = function()
         return true
     end
 end
