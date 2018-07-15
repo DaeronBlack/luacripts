@@ -55,7 +55,7 @@ end
 ]]--
 function check( ply )
 
-    local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(ply:SteamID).."'")
+    local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(ply:SteamID()).."'")
     q:start()
     if not query1.onSuccess then
         return false
