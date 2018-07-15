@@ -23,19 +23,8 @@ end
 
 hook.Add("Initialize", "DatabaseStuff", function( )
     db:connect()
+
 end )
-
-local q = db:query("CREATE TABLE IF NOT EXISTS PAC_whitelist ( ID INTEGER, STEAMIDsql TEXT NOT NULL) ")
-
-function q:onSucess()
-    print "Success!"
-end
-
-function q:onError(err)
-    print ("Error occured! :" .. err)
-end
-
-q:start()
 --[[
 function checktable()
 
@@ -53,24 +42,23 @@ function checktable()
         end
 end
 ]]--
-function check( ply )
 
-    local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(ply:SteamID()).."'")
+    local q = db:query("CREATE TABLE IF NOT EXISTS PAC_whitelist ( ID INTEGER, STEAMIDsql TEXT NOT NULL) ")
     q:start()
-    if not query1.onSuccess then
-        return false
-    end
-end
+ 
+
 
 hook.Add("PrePACConfigApply", "PACRankRestrict", function(ply)
-    if not check --check[ply:SteamID()] then
+    local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(ply:SteamID()).."'")
+    q:start()
+    if not query1(ply:SteamID) --check[ply:SteamID()] then
     then
         return false, "Insufficient rank to use PAC."
     end
 end )
 
 hook.Add( "PrePACEditorOpen", "PACEditorRestrictor", function(ply)
-    if not check --check[ply:SteamID()] then
+    if not check() --check[ply:SteamID()] then
         then
         return false, "Insufficient rank to use PAC!"
     end
