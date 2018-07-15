@@ -4,8 +4,6 @@ local DATABASE_NAME = ""
 local DATABASE_USERNAME = ""
 local DATABASE_PASSWORD  = ""
 
-local mysql00
-local TMySQL
 local multistatements
 local MySQLite_config = MySQLite_config or RP_MySQLConfig or FPP_MySQLConfig
 local moduleLoaded
@@ -26,14 +24,14 @@ local function loadSQLmodule()
 
     multistatements = CLIENT_MULTI_STATEMENTS
 
-    mysl00 = mysqloo
+    mysql00 = mysqloo
     TMySQL = tmysql
 end
 
+db = mysql00.connect( DATABASE_HOST, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_PORT )
+
 loadSQLmodule()
 module("MySQLite")
-
-db = mysql00.connect(DATABASE_HOST, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_PORT)
 
 function db:onConnected()
     print "Connected to database!"
