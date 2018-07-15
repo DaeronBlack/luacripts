@@ -55,9 +55,7 @@ end
 ]]--
 function check( ply )
 
-    PlayerSID = ply:SteamID()
-
-    local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(PlayerSID).."'")
+    local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(ply:SteamID()).."'")
     q:start()
     if not query1.onSuccess then
         return false
@@ -65,14 +63,14 @@ function check( ply )
 end
 
 hook.Add("PrePACConfigApply", "PACRankRestrict", function(ply)
-    if not check == true --check[ply:SteamID()] then
+    if not check --check[ply:SteamID()] then
     then
         return false, "Insufficient rank to use PAC."
     end
 end )
 
 hook.Add( "PrePACEditorOpen", "PACEditorRestrictor", function(ply)
-    if not check == true --check[ply:SteamID()] then
+    if not check --check[ply:SteamID()] then
         then
         return false, "Insufficient rank to use PAC!"
     end
