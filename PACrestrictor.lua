@@ -58,6 +58,7 @@ function check( ply )
     local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(ply:SteamID()).."'")
     q:start()
     print "Query started"
+    print "SteamID : ", ply:SteamID()
     if query1.onSuccess() then
         return true, "Query success!"
     end
