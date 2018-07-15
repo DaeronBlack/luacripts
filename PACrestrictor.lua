@@ -51,7 +51,7 @@ end
 hook.Add("PrePACConfigApply", "PACRankRestrict", function(ply)
     local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(ply:SteamID()).."'")
     q:start()
-    if not query1() --check[ply:SteamID()] then
+    if not query1(ply:SteamID) --check[ply:SteamID()] then
     then
         return false, "Insufficient rank to use PAC."
     end
