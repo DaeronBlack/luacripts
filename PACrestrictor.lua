@@ -1,4 +1,8 @@
 require("mysqloo")
+-- TODO
+-- Make it so superadmins can add users with command in-game
+-- Superadmins can remove aswell ^
+--
 
 local DATABASE_HOST = ""
 local DATABASE_USERNAME = ""
@@ -53,7 +57,7 @@ function check( ply )
 
     PlayerSID = ply:SteamID()
 
-    result = db:query("SELECT SteamIDsql FROM PAC_whitelist WHERE SteamIDsql = '"..PlayerSID.."'")
+    result = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..PlayerSID.."'")
     if (result) then
         return true
     end
