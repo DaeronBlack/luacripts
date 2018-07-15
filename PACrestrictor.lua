@@ -19,7 +19,6 @@ end
 
 hook.Add("Initialize", "DatabaseStuff", function( )
     db:connect()
-    checktable()
 end )
 
 local q = db:query("CREATE TABLE IF NOT EXISTS PAC_whitelist ( ID INTEGER, STEAMIDsql TEXT) ")
