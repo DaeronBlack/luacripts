@@ -63,14 +63,14 @@ end
 hook.Add("CheckSteam", "Some Name", check)
 
 hook.Add("PrePACConfigApply", "PACRankRestrict", function(ply)
-    if not check --check[ply:SteamID()] then
+    if not check() --check[ply:SteamID()] then
     then
         return false, "Insufficient rank to use PAC."
     end
 end )
 
 hook.Add( "PrePACEditorOpen", "PACEditorRestrictor", function(ply)
-    if not check --check[ply:SteamID()] then
+    if not check() --check[ply:SteamID()] then
         then
         return false, "Insufficient rank to use PAC!"
     end
