@@ -25,7 +25,7 @@ hook.Add("Initialize", "DatabaseStuff", function( )
     db:connect()
 end )
 
-local q = db:query("CREATE TABLE IF NOT EXISTS PAC_whitelist ( ID INTEGER, STEAMIDsql TEXT) ")
+local q = db:query("CREATE TABLE IF NOT EXISTS PAC_whitelist ( ID INTEGER, STEAMIDsql TEXT NOT NULL) ")
 
 function q:onSucess()
     print "Success!"
@@ -57,8 +57,8 @@ function check( ply )
 
     PlayerSID = ply:SteamID()
 
-    result = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..PlayerSID.."'")
-    if (result) then
+    local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(PlayerSID).."'")
+    query1.onSuccess = function()
         return true
     end
 end
