@@ -23,18 +23,18 @@ end
 
 hook.Add("Initialize", "DatabaseStuff", function( )
     db:connect()
-
 end )
 
 local q = db:query("CREATE TABLE IF NOT EXISTS PAC_whitelist ( ID INTEGER, STEAMIDsql TEXT NOT NULL) ")
 q:start()
 function q:onSuccess()
     print("Table created!")
-end
+
+end )
 
 hook.Add("PrePACConfigApply", "PACRankRestrict", function(ply)
-
-    steamID = ply:GetNWString("SteamID")
+    
+    steamID = ply:SteamID()
 
     local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(steamID)"'" )
     query1:start()
