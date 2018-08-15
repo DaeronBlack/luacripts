@@ -17,49 +17,39 @@ function db:onConnected()
 end
 
 function db:onConnectionFailed( err )
-    print( "Connection faied!")
+    print( "Connection failed!")
     print( err )
 end
 
 hook.Add("Initialize", "DatabaseStuff", function( )
     db:connect()
+end )
+
+local q = db:query("CREATE TABLE IF NOT EXISTS PAC_whitelist ( ID INTEGER, STEAMIDsql TEXT NOT NULL) ")
+q:start()
+function q:onSuccess()
+    print("Table created!")
 
 end )
---[[
-function checktable()
-
-    local q = db:query("CREATE TABLE IF NOT EXISTS PAC_whitelist ( ID INTEGER, STEAMIDsql TEXT) ")
-
-    if ( not db:TableExists("PAC_whitelist")) then
-        SQLquery = db:query( "CREATE TABLE PAC_whitelist ( ID INTEGER, SteamIDsql TEXT )" )
-        result = db:query(SQLquery)
-            if (db:TableExists("PAC_whitelist")) then
-                print "Table created"
-            else
-                print "Error \n"
-                print "sql.LastError( result )" "\n"
-            end
-        end
-end
-]]--
-
-    local q = db:query("CREATE TABLE IF NOT EXISTS PAC_whitelist ( ID INTEGER, STEAMIDsql TEXT NOT NULL) ")
-    q:start()
- 
-
 
 hook.Add("PrePACConfigApply", "PACRankRestrict", function(ply)
-    local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(ply:SteamID()).."'")
-    q:start()
-    if not query1(ply:SteamID) --check[ply:SteamID()] then
-    then
-        return false, "Insufficient rank to use PAC."
+    
+    steamID = ply:SteamID()
+
+    local query1 = db:query("SELECT STEAMIDsql FROM PAC_whitelist WHERE STEAMIDsql = '"..db:escape(steamID)"'" )
+    query1:start()
+    function query1:onSuccess()
+        print("Query successfull!")
+    end
+    if (query1) then --check[ply:SteamID()] then
+        db_value_ID( ply )
+         return true -- false, "You are not whitelisted to use PAC!"
     end
 end )
 
 hook.Add( "PrePACEditorOpen", "PACEditorRestrictor", function(ply)
-    if not check() --check[ply:SteamID()] then
-        then
-        return false, "Insufficient rank to use PAC!"
+    if not db_value_ID( ply ) --check[ply:SteamID()] then
+    then
+        return false, "You are not whitelisted to use PAC!"
     end
 end )

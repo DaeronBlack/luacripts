@@ -50,6 +50,14 @@ hook.Add("PhysgunPickup", "ply_frozen", function(pl, ent)
     end
 end)
 
+function SWEP:Holster (weapon)
+    if not(ply:GetActiveWeapon("keys") )then
+
+    self.canholster = false
+        end
+
+end
+
 function playerdies( pl, weapon, killer ) if(pl._frozen)then
     return false
 else
